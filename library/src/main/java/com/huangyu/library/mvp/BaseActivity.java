@@ -6,6 +6,8 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import com.huangyu.library.app.ActivityManager;
+
 import butterknife.ButterKnife;
 
 import static com.huangyu.library.util.GenericUtils.getT;
@@ -22,6 +24,7 @@ public abstract class BaseActivity<V extends IBaseView, P extends BasePresenter<
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
+        ActivityManager.getInstance().addActivity(this);
         ButterKnife.bind(this);
 
         mPresenter = getT(this, 1);
@@ -40,6 +43,7 @@ public abstract class BaseActivity<V extends IBaseView, P extends BasePresenter<
         if (mPresenter != null) {
             mPresenter.destroy();
         }
+        ActivityManager.getInstance().removeActivity(this);
         super.onDestroy();
     }
 
