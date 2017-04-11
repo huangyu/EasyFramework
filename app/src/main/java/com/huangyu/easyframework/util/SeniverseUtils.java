@@ -60,7 +60,8 @@ public class SeniverseUtils {
             Mac mac = Mac.getInstance("HmacSHA1");
             mac.init(signingKey);
             byte[] rawHmac = mac.doFinal(data.getBytes("UTF-8"));
-            result = Base64.encodeToString(rawHmac, Base64.DEFAULT);
+//            result = new sun.misc.BASE64Encoder().encode(rawHmac);
+            result = Base64.encodeToString(rawHmac, Base64.URL_SAFE);
         } catch (Exception e) {
             throw new SignatureException("Failed to generate HMAC : " + e.getMessage());
         }
