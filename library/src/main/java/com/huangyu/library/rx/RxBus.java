@@ -1,4 +1,4 @@
-package com.huangyu.library.rxjava;
+package com.huangyu.library.rx;
 
 import android.support.annotation.NonNull;
 

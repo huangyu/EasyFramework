@@ -6,7 +6,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Environment;
 
-import com.huangyu.library.app.AppConstants;
+import com.huangyu.library.app.BaseConstants;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -54,7 +54,7 @@ public class LogToFileUtils {
             String time = formatter.format(new Date());
             fileName = "CaughtException-" + time + "-" + timestamp + ".txt";
             if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-                String path = AppConstants.ROOT_PATH + "Log/";
+                String path = BaseConstants.ROOT_PATH + "Log/";
                 File dir = new File(path);
                 if (!dir.exists()) {
                     dir.mkdirs();
@@ -120,7 +120,7 @@ public class LogToFileUtils {
             String time = mDateformat.format(new Date());
             String fileName = "crash-" + time + "-" + timestamp + ".txt";
             if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-                String path = AppConstants.LOG_PATH;
+                String path = BaseConstants.LOG_PATH;
                 File dir = new File(path);
                 if (!dir.exists()) {
                     dir.mkdirs();
@@ -174,7 +174,7 @@ public class LogToFileUtils {
         try {
             String fileName = null;
             if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-                File configFile = new File(AppConstants.LOG_PATH);
+                File configFile = new File(BaseConstants.LOG_PATH);
                 if (!configFile.exists()) {
                     configFile.mkdirs();
                 }
@@ -185,7 +185,7 @@ public class LogToFileUtils {
                     String time = formatter.format(new Date());
                     fileName = "CaughtException-" + time + "-" + timestamp + ".txt";
                     if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-                        String path = AppConstants.LOG_PATH;
+                        String path = BaseConstants.LOG_PATH;
                         File dir = new File(path);
                         if (!dir.exists()) {
                             dir.mkdirs();

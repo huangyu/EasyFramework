@@ -1,4 +1,4 @@
-package com.huangyu.library.rxjava;
+package com.huangyu.library.rx;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -90,10 +90,10 @@ public class RxManager {
      * 单个presenter生命周期结束，取消订阅和所有Rxbus观察
      */
     public void clear() {
-        mCompositeSubscription.unsubscribe(); // 取消所有订阅
+        mCompositeSubscription.unsubscribe();
         for (Map.Entry<String, Observable<?>> entry : mObservables.entrySet()) {
-            mRxBus.unregister(entry.getKey(), entry.getValue()); // 移除Rxbus观察
-            mRxBus.removeStickyEvent(entry.getKey()); // 移除Rxbus Stikey事件
+            mRxBus.unregister(entry.getKey(), entry.getValue());
+            mRxBus.removeStickyEvent(entry.getKey());
         }
     }
 

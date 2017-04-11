@@ -2,13 +2,15 @@ package com.huangyu.library.mvp;
 
 import android.content.Context;
 
+import com.huangyu.library.rx.RxManager;
+
 /**
  * MVP Presenter 基类
  * Created by huangyu on 2017-4-10.
  */
 public abstract class BasePresenter<V extends IBaseView> {
 
-    protected Context mContext;
+    public Context mContext;
     protected V mView;
 
     public void attachView(V view) {
@@ -17,6 +19,8 @@ public abstract class BasePresenter<V extends IBaseView> {
 
     public abstract void create();
 
-    public abstract void destroy();
+    public void destroy() {
+        RxManager.getInstance().clear();
+    }
 
 }

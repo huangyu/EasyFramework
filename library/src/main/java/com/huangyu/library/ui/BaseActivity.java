@@ -1,4 +1,4 @@
-package com.huangyu.library.mvp;
+package com.huangyu.library.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,9 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import com.huangyu.library.app.ActivityManager;
+import com.huangyu.library.mvp.BasePresenter;
+import com.huangyu.library.mvp.IBaseView;
+import com.huangyu.library.rx.RxManager;
 
 import butterknife.ButterKnife;
 
@@ -43,6 +46,7 @@ public abstract class BaseActivity<V extends IBaseView, P extends BasePresenter<
         if (mPresenter != null) {
             mPresenter.destroy();
         }
+        RxManager.getInstance().clear();
         ActivityManager.getInstance().removeActivity(this);
         super.onDestroy();
     }

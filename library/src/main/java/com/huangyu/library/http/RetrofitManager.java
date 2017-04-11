@@ -7,7 +7,7 @@ import android.text.TextUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.huangyu.library.app.BaseApplication;
-import com.huangyu.library.app.AppConstants;
+import com.huangyu.library.app.BaseConstants;
 import com.huangyu.library.util.LogUtils;
 import com.huangyu.library.util.NetworkUtils;
 
@@ -74,8 +74,6 @@ public class RetrofitManager {
      */
     private static final String CACHE_CONTROL_AGE = "max-age=0";
 
-
-    //构造方法私有
     private RetrofitManager(String baseUrl) {
         // 开启Log
         final HttpLoggingInterceptor logInterceptor = new HttpLoggingInterceptor();
@@ -114,10 +112,10 @@ public class RetrofitManager {
     }
 
     private static class SingletonHolder {
-        private static final RetrofitManager INSTANCE = new RetrofitManager(AppConstants.API_URL);
+        private static final RetrofitManager INSTANCE = new RetrofitManager(BaseConstants.API_URL);
     }
 
-    public static Retrofit getRetrofit() {
+    public static Retrofit getInstance() {
         return SingletonHolder.INSTANCE.mRetrofit;
     }
 
@@ -159,6 +157,5 @@ public class RetrofitManager {
             }
         }
     };
-
 
 }

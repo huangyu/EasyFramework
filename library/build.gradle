@@ -12,20 +12,7 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
-    buildTypes {
-        debug {
-            minifyEnabled false
-            zipAlignEnabled true
-            shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-        release {
-            minifyEnabled false
-            zipAlignEnabled true
-            shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
+
 }
 
 dependencies {
@@ -54,4 +41,7 @@ dependencies {
     compile 'com.jakewharton.rxbinding:rxbinding:0.3.0'
     compile 'com.jakewharton.rxbinding:rxbinding-appcompat-v7:0.3.0'
     compile 'com.jakewharton.rxbinding:rxbinding-design:0.3.0'
+
+    compile 'com.alibaba:fastjson:1.2.31'
+    compile 'com.alibaba:fastjson:1.1.56.android'
 }

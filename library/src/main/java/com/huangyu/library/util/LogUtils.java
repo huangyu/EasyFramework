@@ -9,6 +9,7 @@ import com.orhanobut.logger.Logger;
 /**
  * 如果用于android平台，将信息记录到“LogCat”。如果用于java平台，将信息记录到“Console”
  * 使用logger封装
+ * Created by huangyu on 2017-4-10.
  */
 public class LogUtils {
 
