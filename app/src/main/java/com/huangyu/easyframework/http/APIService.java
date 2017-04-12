@@ -12,6 +12,6 @@ import rx.Observable;
 public interface APIService {
 
     @GET("wxnew/")
-    Observable<NewsResponse> getWeChatNews(@Query("key") String key, @Query("num") String num);
+    Observable<NewsResponse> getWeChatNews(@Query("key") String key, @Query("num") int num, @Query("page") int page);
 
 }

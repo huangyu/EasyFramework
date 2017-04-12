@@ -29,7 +29,7 @@ public abstract class CommonRecyclerAdapter<T> extends RecyclerView.Adapter<Comm
         mDataList = new ArrayList<>();
     }
 
-    public void setData(List<T> list) {
+    public void addAllData(List<T> list) {
         mDataList.addAll(list);
         notifyDataSetChanged();
     }

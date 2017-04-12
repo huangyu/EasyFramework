@@ -16,15 +16,16 @@ import rx.Observable;
 public interface IMainContract {
 
     interface IMainModel extends IBaseModel {
-        Observable<NewsResponse> getWeChatNews();
+        Observable<NewsResponse> getWeChatNews(int page, int num);
     }
 
     interface IMainView extends IBaseView {
         void setData(List<News> data);
+        void addData(List<News> data);
     }
 
     abstract class AMainPresenter extends BasePresenter<IMainView> {
-        protected abstract void getWeChetNews();
+        public abstract void getWeChetNews(int page, int num);
     }
 
 }

@@ -20,8 +20,8 @@ public class APIServiceManager {
         return APIServiceManager.SingletonHolder.INSTANCE;
     }
 
-    public Observable<NewsResponse> getWeChatNews(String key, String num) {
-        return service.getWeChatNews(key, num);
+    public Observable<NewsResponse> getWeChatNews(String key, int num, int page) {
+        return service.getWeChatNews(key, num, page);
     }
 
 }

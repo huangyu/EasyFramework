@@ -1,6 +1,7 @@
 package com.huangyu.easyframework.ui.activity;
 
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.widget.Toast;
 
@@ -10,6 +11,7 @@ import com.huangyu.easyframework.mvp.contract.IMainContract;
 import com.huangyu.easyframework.mvp.presenter.MainPresenter;
 import com.huangyu.easyframework.ui.adapter.NewsListAdapter;
 import com.huangyu.easyframework.ui.widget.refreshandload.CommonRecyclerAdapter;
+import com.huangyu.easyframework.ui.widget.refreshandload.RefreshAndLoadListener;
 import com.huangyu.easyframework.ui.widget.refreshandload.RefreshAndLoadView;
 import com.huangyu.library.ui.BaseActivity;
 
@@ -43,54 +45,41 @@ public class MainActivity extends BaseActivity<IMainContract.IMainView, MainPres
                 Toast.makeText(MainActivity.this, "click item " + position, Toast.LENGTH_SHORT).show();
             }
         });
-//        refreshAndLoadView.setLayoutManager(new LinearLayoutManager(MainActivity.this)).setAdapter(adapter).setRefreshAndLoadListener(new RefreshAndLoadListener() {
-//            @Override
-//            public void onRefresh() {
-//                refresh();
-//            }
-//
-//            @Override
-//            public void onLoad() {
-//                load();
-//            }
-//        }).startRefresh();
+        refreshAndLoadView.setLayoutManager(new LinearLayoutManager(MainActivity.this)).setAdapter(adapter).setRefreshAndLoadListener(new RefreshAndLoadListener() {
+            @Override
+            public void onRefresh() {
+                refresh();
+            }
+
+            @Override
+            public void onLoad() {
+                load();
+            }
+        }).startRefresh();
     }
 
     @Override
     public void setData(List<News> data) {
-        adapter.setData(data);
+        adapter.clearData();
+        adapter.addAllData(data);
     }
 
-//    private void loadData(final boolean isRefresh) {
-//        refreshAndLoadView.postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                if (adapter != null) {
-//                    if (isRefresh) {
-//                        adapter.clearData();
-//                    }
-//                    addData(mGroupSize, mGroupCount);
-//                }
-//                refreshAndLoadView.setComplete();
-//            }
-//        }, 2000);
-//    }
-//
-//    private void addData(int groupSize, int groupCount) {
-//        int start = groupSize * (groupCount - 1);
-//        for (int i = start; i < groupSize * groupCount; i++) {
-//            adapter.addItem("item" + i);
-//        }
-//    }
-//
-//    private void refresh() {
-//        mGroupCount = 1;
-//        loadData(true);
-//    }
-//
-//    private void load() {
-//        mGroupCount++;
-//        loadData(false);
-//    }
+    @Override
+    public void addData(List<News> data) {
+        adapter.addAllData(data);
+    }
+
+    private void refresh() {
+        adapter.getPage().setPage(1);
+        mPresenter.getWeChetNews(adapter.getPage().getPage(), adapter.getPage().getNum());
+        refreshAndLoadView.setComplete();
+    }
+
+    private void load() {
+        int page = adapter.getPage().getPage();
+        adapter.getPage().setPage(++page);
+        mPresenter.getWeChetNews(adapter.getPage().getPage(), adapter.getPage().getNum());
+        refreshAndLoadView.setComplete();
+    }
 
 }

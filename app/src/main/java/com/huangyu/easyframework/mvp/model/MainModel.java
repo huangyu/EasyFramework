@@ -15,8 +15,8 @@ import rx.schedulers.Schedulers;
 public class MainModel implements IMainContract.IMainModel {
 
     @Override
-    public Observable<NewsResponse> getWeChatNews() {
-        return APIServiceManager.getInstance().getWeChatNews(AppConstants.TIAN_XING_KEY, "20")
+    public Observable<NewsResponse> getWeChatNews(int page, int num) {
+        return APIServiceManager.getInstance().getWeChatNews(AppConstants.TIAN_XING_KEY, num, page)
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 

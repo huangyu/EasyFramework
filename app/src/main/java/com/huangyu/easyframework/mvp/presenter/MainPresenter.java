@@ -18,8 +18,6 @@ public class MainPresenter extends IMainContract.AMainPresenter {
     @Override
     public void create() {
         mainModel = new MainModel();
-
-        getWeChetNews();
     }
 
     @Override
@@ -28,8 +26,8 @@ public class MainPresenter extends IMainContract.AMainPresenter {
     }
 
     @Override
-    protected void getWeChetNews() {
-        Observable<NewsResponse> observable = mainModel.getWeChatNews();
+    public void getWeChetNews(final int page, int num) {
+        Observable<NewsResponse> observable = mainModel.getWeChatNews(page, num);
         RxManager.getInstance().add(observable.subscribe(new Subscriber<NewsResponse>() {
             @Override
             public void onCompleted() {
@@ -45,7 +43,12 @@ public class MainPresenter extends IMainContract.AMainPresenter {
             public void onNext(NewsResponse newsResponse) {
                 Integer code = newsResponse.getCode();
                 if (code == 200) {
-                    mView.setData(newsResponse.getNewslist());
+                    if(page == 1) {
+                        mView.setData(newsResponse.getNewslist());
+                    }
+                    else {
+                        mView.addData(newsResponse.getNewslist());
+                    }
                 } else {
 
                 }
