@@ -14,6 +14,6 @@ public class BaseConstants {
 
     public static final String LOG_PATH = ROOT_PATH + "Log";
 
-    public static final String API_URL = "https://api.seniverse.com/v3/";
+    public static final String API_URL = "https://api.tianapi.com/";
 
 }

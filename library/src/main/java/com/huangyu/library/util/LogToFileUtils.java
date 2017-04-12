@@ -54,7 +54,7 @@ public class LogToFileUtils {
             String time = formatter.format(new Date());
             fileName = "CaughtException-" + time + "-" + timestamp + ".txt";
             if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-                String path = BaseConstants.ROOT_PATH + "Log/";
+                String path = BaseConstants.LOG_PATH;
                 File dir = new File(path);
                 if (!dir.exists()) {
                     dir.mkdirs();

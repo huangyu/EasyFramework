@@ -4,8 +4,6 @@ package com.huangyu.library.http;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.huangyu.library.app.BaseApplication;
 import com.huangyu.library.app.BaseConstants;
 import com.huangyu.library.util.LogUtils;
@@ -102,10 +100,9 @@ public class RetrofitManager {
                 .cache(cache)
                 .build();
 
-        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").serializeNulls().create();
         mRetrofit = new Retrofit.Builder()
                 .client(okHttpClient)
-                .addConverterFactory(GsonConverterFactory.create(gson))
+                .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .baseUrl(baseUrl)
                 .build();

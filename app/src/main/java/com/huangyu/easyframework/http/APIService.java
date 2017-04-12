@@ -1,9 +1,9 @@
 package com.huangyu.easyframework.http;
 
-import com.huangyu.easyframework.bean.Weather;
+import com.huangyu.easyframework.bean.NewsResponse;
 
 import retrofit2.http.GET;
-import retrofit2.http.Path;
+import retrofit2.http.Query;
 import rx.Observable;
 
 /**
@@ -11,7 +11,7 @@ import rx.Observable;
  */
 public interface APIService {
 
-    @GET("{url}")
-    Observable<Weather> getDailyWeather(@Path("url") String url);
+    @GET("wxnew/")
+    Observable<NewsResponse> getWeChatNews(@Query("key") String key, @Query("num") String num);
 
 }

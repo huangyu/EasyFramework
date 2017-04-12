@@ -7,10 +7,6 @@ import com.huangyu.library.app.BaseConstants;
  */
 public class AppConstants extends BaseConstants {
 
-    public static final String SENIVERSE_WEATHER_DAILY_URL = "weather/daily.json";
-
-    public static final String SENIVERSE_KEY = "qruqotfsvneusrxj";
-
-    public static final String SENIVERSE_ID = "U34D4D4621";
+    public static final String TIAN_XING_KEY = "fef970e6f58d44cd7c5183e4e1501763";
 
 }

@@ -1,9 +1,12 @@
 package com.huangyu.easyframework.mvp.contract;
 
-import com.huangyu.easyframework.bean.Weather;
+import com.huangyu.easyframework.bean.News;
+import com.huangyu.easyframework.bean.NewsResponse;
 import com.huangyu.library.mvp.BasePresenter;
 import com.huangyu.library.mvp.IBaseModel;
 import com.huangyu.library.mvp.IBaseView;
+
+import java.util.List;
 
 import rx.Observable;
 
@@ -13,15 +16,15 @@ import rx.Observable;
 public interface IMainContract {
 
     interface IMainModel extends IBaseModel {
-        Observable<Weather> queryDailyWeather();
+        Observable<NewsResponse> getWeChatNews();
     }
 
     interface IMainView extends IBaseView {
-        void setText(String text);
+        void setData(List<News> data);
     }
 
     abstract class AMainPresenter extends BasePresenter<IMainView> {
-        protected abstract void queryDailyWeather();
+        protected abstract void getWeChetNews();
     }
 
 }

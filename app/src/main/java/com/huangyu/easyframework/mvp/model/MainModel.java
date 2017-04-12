@@ -1,12 +1,9 @@
 package com.huangyu.easyframework.mvp.model;
 
-import com.huangyu.easyframework.bean.Weather;
+import com.huangyu.easyframework.app.AppConstants;
+import com.huangyu.easyframework.bean.NewsResponse;
 import com.huangyu.easyframework.http.APIServiceManager;
 import com.huangyu.easyframework.mvp.contract.IMainContract;
-import com.huangyu.easyframework.util.SeniverseUtils;
-
-import java.io.UnsupportedEncodingException;
-import java.security.SignatureException;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -18,16 +15,8 @@ import rx.schedulers.Schedulers;
 public class MainModel implements IMainContract.IMainModel {
 
     @Override
-    public Observable<Weather> queryDailyWeather() {
-        String url = null;
-        try {
-            url = SeniverseUtils.generateGetDiaryWeatherURL("guangzhou", "zh-Hans", "c", "1", "1");
-        } catch (SignatureException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        return APIServiceManager.getInstance().getDailyWeather(url)
+    public Observable<NewsResponse> getWeChatNews() {
+        return APIServiceManager.getInstance().getWeChatNews(AppConstants.TIAN_XING_KEY, "20")
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 

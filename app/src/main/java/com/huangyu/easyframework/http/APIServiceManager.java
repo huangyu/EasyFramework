@@ -1,6 +1,6 @@
 package com.huangyu.easyframework.http;
 
-import com.huangyu.easyframework.bean.Weather;
+import com.huangyu.easyframework.bean.NewsResponse;
 import com.huangyu.library.http.RetrofitManager;
 
 import rx.Observable;
@@ -20,8 +20,8 @@ public class APIServiceManager {
         return APIServiceManager.SingletonHolder.INSTANCE;
     }
 
-    public Observable<Weather> getDailyWeather(String url) {
-        return service.getDailyWeather(url);
+    public Observable<NewsResponse> getWeChatNews(String key, String num) {
+        return service.getWeChatNews(key, num);
     }
 
 }

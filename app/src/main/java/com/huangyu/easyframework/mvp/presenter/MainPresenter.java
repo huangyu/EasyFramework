@@ -1,6 +1,6 @@
 package com.huangyu.easyframework.mvp.presenter;
 
-import com.huangyu.easyframework.bean.Weather;
+import com.huangyu.easyframework.bean.NewsResponse;
 import com.huangyu.easyframework.mvp.contract.IMainContract;
 import com.huangyu.easyframework.mvp.model.MainModel;
 import com.huangyu.library.rx.RxManager;
@@ -19,7 +19,7 @@ public class MainPresenter extends IMainContract.AMainPresenter {
     public void create() {
         mainModel = new MainModel();
 
-        queryDailyWeather();
+        getWeChetNews();
     }
 
     @Override
@@ -28,9 +28,9 @@ public class MainPresenter extends IMainContract.AMainPresenter {
     }
 
     @Override
-    protected void queryDailyWeather() {
-        Observable<Weather> observable = mainModel.queryDailyWeather();
-        RxManager.getInstance().add(observable.subscribe(new Subscriber<Weather>() {
+    protected void getWeChetNews() {
+        Observable<NewsResponse> observable = mainModel.getWeChatNews();
+        RxManager.getInstance().add(observable.subscribe(new Subscriber<NewsResponse>() {
             @Override
             public void onCompleted() {
 
@@ -42,8 +42,13 @@ public class MainPresenter extends IMainContract.AMainPresenter {
             }
 
             @Override
-            public void onNext(Weather weather) {
-                mView.setText("123");
+            public void onNext(NewsResponse newsResponse) {
+                Integer code = newsResponse.getCode();
+                if (code == 200) {
+                    mView.setData(newsResponse.getNewslist());
+                } else {
+
+                }
             }
         }));
     }
