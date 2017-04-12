@@ -1,4 +1,4 @@
-package com.huangyu.library.ui;
+package com.huangyu.easyframework.ui.widget.refreshandload;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -9,10 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * RecyclerView通用Adapter
- * Created by huangyu on 2017-4-12.
+ * Created by huangyu on 2017/4/4.
  */
-public abstract class CommonRecyclerViewAdapter<T> extends RecyclerView.Adapter<CommonRecyclerViewHolder> {
+public abstract class CommonRecyclerAdapter<T> extends RecyclerView.Adapter<CommonRecyclerViewHolder> {
+
+    protected static final int TYPE_NORMAL = 0;
+    protected static final int TYPE_HEADER = 1;
+    protected static final int TYPE_FOOTER = 2;
 
     protected Context mContext;
 
@@ -21,7 +24,7 @@ public abstract class CommonRecyclerViewAdapter<T> extends RecyclerView.Adapter<
     protected OnItemClickListener mOnItemClick;
     protected OnItemLongClickListener mOnItemLongClick;
 
-    public CommonRecyclerViewAdapter(Context context) {
+    public CommonRecyclerAdapter(Context context) {
         mContext = context;
         mDataList = new ArrayList<>();
     }
@@ -63,7 +66,17 @@ public abstract class CommonRecyclerViewAdapter<T> extends RecyclerView.Adapter<
     public CommonRecyclerViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         CommonRecyclerViewHolder holder;
 
-        holder = CommonRecyclerViewHolder.getViewHolder(viewGroup, getLayoutResource());
+        if (viewType == TYPE_HEADER) {
+            holder = CommonRecyclerViewHolder.getViewHolder(viewGroup, getHeadLayoutResource());
+        } else if (viewType == TYPE_FOOTER) {
+            holder = CommonRecyclerViewHolder.getViewHolder(viewGroup, getFootLayoutResource());
+        } else {
+            holder = CommonRecyclerViewHolder.getViewHolder(viewGroup, getLayoutResource());
+        }
+
+        if (holder == null) {
+            return null;
+        }
 
         if (mOnItemClick != null) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -90,6 +103,17 @@ public abstract class CommonRecyclerViewAdapter<T> extends RecyclerView.Adapter<
     }
 
     @Override
+    public int getItemViewType(int position) {
+        if (position == 0) {
+            return TYPE_HEADER;
+        } else if (position + 1 == getItemCount()) {
+            return TYPE_FOOTER;
+        } else {
+            return TYPE_NORMAL;
+        }
+    }
+
+    @Override
     public void onBindViewHolder(CommonRecyclerViewHolder holder, int position) {
         if (holder != null && position < mDataList.size()) {
             convert(holder, mDataList.get(position), position);
@@ -99,6 +123,14 @@ public abstract class CommonRecyclerViewAdapter<T> extends RecyclerView.Adapter<
     public abstract void convert(CommonRecyclerViewHolder holder, T data, int position);
 
     public abstract int getLayoutResource();
+
+    public int getHeadLayoutResource() {
+        return 0;
+    }
+
+    public int getFootLayoutResource() {
+        return 0;
+    }
 
     @Override
     public int getItemCount() {

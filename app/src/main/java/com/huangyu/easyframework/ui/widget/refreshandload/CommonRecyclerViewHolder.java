@@ -1,4 +1,4 @@
-package com.huangyu.library.ui;
+package com.huangyu.easyframework.ui.widget.refreshandload;
 
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
@@ -7,8 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * RecyclerView通用ViewHolder
- * Created by huangyu on 2017-4-12.
+ * Created by huangyu on 2017/4/4.
  */
 public class CommonRecyclerViewHolder extends RecyclerView.ViewHolder {
 
@@ -20,6 +19,9 @@ public class CommonRecyclerViewHolder extends RecyclerView.ViewHolder {
     }
 
     public static CommonRecyclerViewHolder getViewHolder(ViewGroup parent, int layoutId) {
+        if(layoutId == 0) {
+            return null;
+        }
         return new CommonRecyclerViewHolder(LayoutInflater.from(parent.getContext()).inflate(layoutId, parent, false));
     }
 
