@@ -7,7 +7,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.huangyu.easyframework.R;
 import com.huangyu.easyframework.bean.News;
-import com.huangyu.easyframework.bean.Page;
+import com.huangyu.easyframework.bean.PageBean;
 import com.huangyu.easyframework.ui.widget.refreshandload.CommonRecyclerAdapter;
 import com.huangyu.easyframework.ui.widget.refreshandload.CommonRecyclerViewHolder;
 
@@ -16,19 +16,19 @@ import com.huangyu.easyframework.ui.widget.refreshandload.CommonRecyclerViewHold
  */
 public class NewsListAdapter extends CommonRecyclerAdapter<News> {
 
-    private Page mPage;
+    private PageBean mPage;
 
-    public Page getPage() {
+    public PageBean getPage() {
         return this.mPage;
     }
 
-    public void setPage(Page page) {
+    public void setPage(PageBean page) {
         this.mPage = page;
     }
 
     public NewsListAdapter(Context context) {
         super(context);
-        mPage = new Page();
+        mPage = new PageBean();
     }
 
     @Override

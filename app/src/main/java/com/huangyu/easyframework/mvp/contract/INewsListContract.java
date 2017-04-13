@@ -13,18 +13,20 @@ import rx.Observable;
 /**
  * Created by huangyu on 2017-4-11.
  */
-public interface IMainContract {
+public interface INewsListContract {
 
-    interface IMainModel extends IBaseModel {
+    interface INewsListView extends IBaseView {
+        void setData(List<News> data);
+        void addData(List<News> data);
+        void loadComplete();
+        void showError(String msg);
+    }
+
+    interface INewsListModel extends IBaseModel {
         Observable<NewsResponse> getWeChatNews(int page, int num);
     }
 
-    interface IMainView extends IBaseView {
-        void setData(List<News> data);
-        void addData(List<News> data);
-    }
-
-    abstract class AMainPresenter extends BasePresenter<IMainView> {
+    abstract class ANewsListPresenter extends BasePresenter<INewsListView> {
         public abstract void getWeChetNews(int page, int num);
     }
 

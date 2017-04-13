@@ -4,7 +4,7 @@ package com.huangyu.easyframework.bean;
  * Created by huangyu on 2017/4/12.
  */
 
-public class Page {
+public class PageBean {
 
     private int page;
 

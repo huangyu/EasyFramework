@@ -97,7 +97,7 @@ public class RefreshAndLoadView extends LinearLayout {
     private void init(Context context) {
         View mView = LayoutInflater.from(context).inflate(R.layout.layout_pull_load_more, this);
         mSwipeRefreshLayout = (SwipeRefreshLayout) mView.findViewById(R.id.swipe_refresh_layout);
-        mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_green_dark, android.R.color.holo_blue_dark, android.R.color.holo_red_dark, android.R.color.holo_orange_dark);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

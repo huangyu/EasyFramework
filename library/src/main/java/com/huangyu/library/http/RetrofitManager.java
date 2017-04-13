@@ -30,9 +30,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class RetrofitManager {
 
-    //读超时长，单位：毫秒
+    // 读超时长，单位：毫秒
     private static final int READ_TIME_OUT = 30000;
-    //连接时长，单位：毫秒
+    // 连接时长，单位：毫秒
     private static final int CONNECT_TIME_OUT = 30000;
     private Retrofit mRetrofit;
 

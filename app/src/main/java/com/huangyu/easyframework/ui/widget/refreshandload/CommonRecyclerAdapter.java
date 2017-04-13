@@ -49,6 +49,10 @@ public abstract class CommonRecyclerAdapter<T> extends RecyclerView.Adapter<Comm
         notifyItemRemoved(positon);
     }
 
+    public T getItem(int position) {
+        return mDataList == null ? null : mDataList.get(position);
+    }
+
     public void clearData() {
         mDataList.clear();
         notifyDataSetChanged();
