@@ -26,7 +26,7 @@ public class GenericUtils {
             Class<?> clazz = (Class) parameterizedType.getActualTypeArguments()[typePosition];
             return (T) clazz.newInstance();
         } catch (Exception e) {
-            e.printStackTrace();
+            // 部分未MVP的Activity会抛出此异常
         }
         return null;
     }

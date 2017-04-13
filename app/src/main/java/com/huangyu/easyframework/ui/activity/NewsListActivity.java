@@ -43,6 +43,7 @@ public class NewsListActivity extends BaseActivity<INewsListContract.INewsListVi
         mAdapter.setOnItemClick(new CommonRecyclerAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
+                loadComplete();
                 String url = mAdapter.getItem(position).getUrl();
                 Intent intent = new Intent(NewsListActivity.this, NewsDetailActivity.class);
                 intent.putExtra("url", url);
@@ -60,6 +61,11 @@ public class NewsListActivity extends BaseActivity<INewsListContract.INewsListVi
                 load();
             }
         }).startRefresh();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     @Override

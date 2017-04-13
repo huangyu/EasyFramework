@@ -1,24 +1,14 @@
 package com.huangyu.library.http;
 
 
-import android.support.annotation.NonNull;
-import android.text.TextUtils;
-
 import com.huangyu.library.app.BaseApplication;
 import com.huangyu.library.app.BaseConstants;
-import com.huangyu.library.util.LogUtils;
-import com.huangyu.library.util.NetworkUtils;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Cache;
-import okhttp3.CacheControl;
-import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -31,9 +21,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitManager {
 
     // 读超时长，单位：毫秒
-    private static final int READ_TIME_OUT = 30000;
+    private static final int READ_TIME_OUT = 8000;
     // 连接时长，单位：毫秒
-    private static final int CONNECT_TIME_OUT = 30000;
+    private static final int CONNECT_TIME_OUT = 8000;
     private Retrofit mRetrofit;
 
     /*************************缓存设置*********************/
@@ -79,23 +69,23 @@ public class RetrofitManager {
         // 缓存
         File cacheFile = new File(BaseApplication.getAppContext().getCacheDir(), "cache");
         Cache cache = new Cache(cacheFile, 1024 * 1024 * 100); //100Mb
-        // 增加头部信息
-        Interceptor headerInterceptor = new Interceptor() {
-            @Override
-            public Response intercept(Chain chain) throws IOException {
-                Request build = chain.request().newBuilder()
-                        .addHeader("Content-Type", "application/json; charset=utf-8")
-                        .build();
-                return chain.proceed(build);
-            }
-        };
+//        // 增加头部信息
+//        Interceptor headerInterceptor = new Interceptor() {
+//            @Override
+//            public Response intercept(Chain chain) throws IOException {
+//                Request build = chain.request().newBuilder()
+//                        .addHeader("Content-Type", "application/json; charset=utf-8")
+//                        .build();
+//                return chain.proceed(build);
+//            }
+//        };
 
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .readTimeout(READ_TIME_OUT, TimeUnit.MILLISECONDS)
                 .connectTimeout(CONNECT_TIME_OUT, TimeUnit.MILLISECONDS)
-                .addInterceptor(mRewriteCacheControlInterceptor)
-                .addNetworkInterceptor(mRewriteCacheControlInterceptor)
-                .addInterceptor(headerInterceptor)
+//                .addInterceptor(mRewriteCacheControlInterceptor)
+//                .addNetworkInterceptor(mRewriteCacheControlInterceptor)
+//                .addInterceptor(headerInterceptor)
                 .addInterceptor(logInterceptor)
                 .cache(cache)
                 .build();
@@ -116,43 +106,43 @@ public class RetrofitManager {
         return SingletonHolder.INSTANCE.mRetrofit;
     }
 
-    /**
-     * 根据网络状况获取缓存的策略
-     */
-    @NonNull
-    public static String getCacheControl() {
-        return NetworkUtils.isConnected() ? CACHE_CONTROL_AGE : CACHE_CONTROL_CACHE;
-    }
-
-    /**
-     * 云端响应头拦截器，用来配置缓存策略
-     * Dangerous interceptor that rewrites the server's cache-control header.
-     */
-    private final Interceptor mRewriteCacheControlInterceptor = new Interceptor() {
-        @Override
-        public Response intercept(Chain chain) throws IOException {
-            Request request = chain.request();
-            String cacheControl = request.cacheControl().toString();
-            if (!NetworkUtils.isConnected()) {
-                request = request.newBuilder()
-                        .cacheControl(TextUtils.isEmpty(cacheControl) ? CacheControl.FORCE_NETWORK : CacheControl.FORCE_CACHE)
-                        .build();
-            }
-            Response originalResponse = chain.proceed(request);
-            LogUtils.logd("api返回数据", originalResponse.body().toString());
-            if (NetworkUtils.isConnected()) {
-                //有网的时候读接口上的@Headers里的配置，你可以在这里进行统一的设置
-                return originalResponse.newBuilder()
-                        .header("Cache-Control", cacheControl)
-                        .removeHeader("Pragma")
-                        .build();
-            } else {
-                return originalResponse.newBuilder()
-                        .header("Cache-Control", "public, only-if-cached, max-stale=" + CACHE_STALE_SEC)
-                        .removeHeader("Pragma")
-                        .build();
-            }
-        }
-    };
+//    /**
+//     * 根据网络状况获取缓存的策略
+//     */
+//    @NonNull
+//    public static String getCacheControl() {
+//        return NetworkUtils.isConnected() ? CACHE_CONTROL_AGE : CACHE_CONTROL_CACHE;
+//    }
+//
+//    /**
+//     * 云端响应头拦截器，用来配置缓存策略
+//     * Dangerous interceptor that rewrites the server's cache-control header.
+//     */
+//    private final Interceptor mRewriteCacheControlInterceptor = new Interceptor() {
+//        @Override
+//        public Response intercept(Chain chain) throws IOException {
+//            Request request = chain.request();
+//            String cacheControl = request.cacheControl().toString();
+//            if (!NetworkUtils.isConnected()) {
+//                request = request.newBuilder()
+//                        .cacheControl(TextUtils.isEmpty(cacheControl) ? CacheControl.FORCE_NETWORK : CacheControl.FORCE_CACHE)
+//                        .build();
+//            }
+//            Response originalResponse = chain.proceed(request);
+//            LogUtils.logd("api返回数据", originalResponse.body().toString());
+//            if (NetworkUtils.isConnected()) {
+//                //有网的时候读接口上的@Headers里的配置，你可以在这里进行统一的设置
+//                return originalResponse.newBuilder()
+//                        .header("Cache-Control", cacheControl)
+//                        .removeHeader("Pragma")
+//                        .build();
+//            } else {
+//                return originalResponse.newBuilder()
+//                        .header("Cache-Control", "public, only-if-cached, max-stale=" + CACHE_STALE_SEC)
+//                        .removeHeader("Pragma")
+//                        .build();
+//            }
+//        }
+//    };
 
 }
