@@ -68,24 +68,14 @@ public class RetrofitManager {
         logInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         // 缓存
         File cacheFile = new File(BaseApplication.getAppContext().getCacheDir(), "cache");
-        Cache cache = new Cache(cacheFile, 1024 * 1024 * 100); //100Mb
-//        // 增加头部信息
-//        Interceptor headerInterceptor = new Interceptor() {
-//            @Override
-//            public Response intercept(Chain chain) throws IOException {
-//                Request build = chain.request().newBuilder()
-//                        .addHeader("Content-Type", "application/json; charset=utf-8")
-//                        .build();
-//                return chain.proceed(build);
-//            }
-//        };
+        Cache cache = new Cache(cacheFile, 1024 * 1024 * 100); // 100Mb
 
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .readTimeout(READ_TIME_OUT, TimeUnit.MILLISECONDS)
                 .connectTimeout(CONNECT_TIME_OUT, TimeUnit.MILLISECONDS)
-//                .addInterceptor(mRewriteCacheControlInterceptor)
-//                .addNetworkInterceptor(mRewriteCacheControlInterceptor)
-//                .addInterceptor(headerInterceptor)
+                .addNetworkInterceptor(new RewriteCacheControlInterceptor(CACHE_STALE_SEC))
+                .addInterceptor(new HeaderIntercepter())
+                .addInterceptor(new GzipInterceptor())
                 .addInterceptor(logInterceptor)
                 .cache(cache)
                 .build();
@@ -113,36 +103,5 @@ public class RetrofitManager {
 //    public static String getCacheControl() {
 //        return NetworkUtils.isConnected() ? CACHE_CONTROL_AGE : CACHE_CONTROL_CACHE;
 //    }
-//
-//    /**
-//     * 云端响应头拦截器，用来配置缓存策略
-//     * Dangerous interceptor that rewrites the server's cache-control header.
-//     */
-//    private final Interceptor mRewriteCacheControlInterceptor = new Interceptor() {
-//        @Override
-//        public Response intercept(Chain chain) throws IOException {
-//            Request request = chain.request();
-//            String cacheControl = request.cacheControl().toString();
-//            if (!NetworkUtils.isConnected()) {
-//                request = request.newBuilder()
-//                        .cacheControl(TextUtils.isEmpty(cacheControl) ? CacheControl.FORCE_NETWORK : CacheControl.FORCE_CACHE)
-//                        .build();
-//            }
-//            Response originalResponse = chain.proceed(request);
-//            LogUtils.logd("api返回数据", originalResponse.body().toString());
-//            if (NetworkUtils.isConnected()) {
-//                //有网的时候读接口上的@Headers里的配置，你可以在这里进行统一的设置
-//                return originalResponse.newBuilder()
-//                        .header("Cache-Control", cacheControl)
-//                        .removeHeader("Pragma")
-//                        .build();
-//            } else {
-//                return originalResponse.newBuilder()
-//                        .header("Cache-Control", "public, only-if-cached, max-stale=" + CACHE_STALE_SEC)
-//                        .removeHeader("Pragma")
-//                        .build();
-//            }
-//        }
-//    };
 
 }

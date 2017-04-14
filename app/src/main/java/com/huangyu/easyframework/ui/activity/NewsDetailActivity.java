@@ -32,12 +32,7 @@ public class NewsDetailActivity extends BaseActivity {
     @Override
     protected void initView(Bundle savedInstanceState) {
         final String url = getIntent().getStringExtra("url");
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                mAdvancedWebView.loadUrl(url);
-            }
-        });
+        mSwipeRefreshLayout.setEnabled(false);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
         mAdvancedWebView.setListener(this, new AdvancedWebView.Listener() {
             @Override

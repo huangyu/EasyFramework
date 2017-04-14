@@ -419,6 +419,24 @@ public class AdvancedWebView extends WebView {
         webSettings.setBuiltInZoomControls(enabled);
     }
 
+    /**
+     * 注入 js 函数监听，这段 js 函数的功能就是，遍历所有的图片，并添加 onclick 函数，
+     * 实现点击事件，
+     * 函数的功能是在图片点击的时候调用本地 java 接口并传递点击图片对应的 url 过去
+     */
+    private void addImageClickListener() {
+        loadUrl("javascript:(function(){" +
+                "var images = document.getElementsByTagName(\"img\"); " +
+                "for(var i = 0; i < images.length; i++)"
+                + "{"
+                + "    images[i].onclick=function()  "
+                + "   {  "
+                + "        window.image_click.openImage(this.src);  " +
+                "    }  " +
+                "}" +
+                "})()");
+    }
+
     @SuppressLint({"SetJavaScriptEnabled"})
     protected void init(Context context) {
         // in IDE's preview mode
@@ -446,6 +464,10 @@ public class AdvancedWebView extends WebView {
         setAllowAccessFromFileUrls(webSettings, false);
         webSettings.setBuiltInZoomControls(false);
         webSettings.setJavaScriptEnabled(true);
+
+        SetImageSrcClick setImageSrcClick = new SetImageSrcClick(context);
+        addJavascriptInterface(setImageSrcClick, "image_click");
+
         webSettings.setDomStorageEnabled(true);
         if (Build.VERSION.SDK_INT < 18) {
             webSettings.setRenderPriority(WebSettings.RenderPriority.HIGH);
@@ -484,6 +506,8 @@ public class AdvancedWebView extends WebView {
                 if (mCustomWebViewClient != null) {
                     mCustomWebViewClient.onPageFinished(view, url);
                 }
+
+                addImageClickListener();
             }
 
             @Override
