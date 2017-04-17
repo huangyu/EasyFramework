@@ -14,16 +14,16 @@ import rx.Subscription;
  */
 public class NewsListPresenter extends INewsListContract.ANewsListPresenter {
 
-    private NewsListModel mainModel;
+    private NewsListModel mMainModel;
 
     @Override
     public void create() {
-        mainModel = new NewsListModel();
+        mMainModel = new NewsListModel();
     }
 
     @Override
     public void getWeChetNews(final int page, int num) {
-        Observable<NewsResponse> observable = mainModel.getWeChatNews(page, num);
+        Observable<NewsResponse> observable = mMainModel.getWeChatNews(page, num);
         Subscription subscription = observable.subscribe(new Subscriber<NewsResponse>() {
             @Override
             public void onCompleted() {
