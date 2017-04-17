@@ -2,7 +2,7 @@ package com.huangyu.easyframework.mvp.presenter;
 
 import com.huangyu.easyframework.bean.NewsResponse;
 import com.huangyu.easyframework.mvp.contract.INewsListContract;
-import com.huangyu.easyframework.mvp.model.MainModel;
+import com.huangyu.easyframework.mvp.model.NewsListModel;
 import com.huangyu.library.rx.RxManager;
 
 import rx.Observable;
@@ -14,11 +14,11 @@ import rx.Subscription;
  */
 public class NewsListPresenter extends INewsListContract.ANewsListPresenter {
 
-    private MainModel mainModel;
+    private NewsListModel mainModel;
 
     @Override
     public void create() {
-        mainModel = new MainModel();
+        mainModel = new NewsListModel();
     }
 
     @Override

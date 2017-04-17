@@ -12,7 +12,7 @@ import rx.schedulers.Schedulers;
 /**
  * Created by huangyu on 2017-4-11.
  */
-public class MainModel implements INewsListContract.INewsListModel {
+public class NewsListModel implements INewsListContract.INewsListModel {
 
     @Override
     public Observable<NewsResponse> getWeChatNews(int page, int num) {
