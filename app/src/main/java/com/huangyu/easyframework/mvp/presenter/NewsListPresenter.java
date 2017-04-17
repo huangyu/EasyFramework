@@ -28,14 +28,12 @@ public class NewsListPresenter extends INewsListContract.ANewsListPresenter {
             @Override
             public void onCompleted() {
                 mView.loadComplete();
-                unsubscribe();
             }
 
             @Override
             public void onError(Throwable e) {
                 mView.showError(e.getMessage());
                 mView.loadComplete();
-                unsubscribe();
             }
 
             @Override
@@ -50,6 +48,7 @@ public class NewsListPresenter extends INewsListContract.ANewsListPresenter {
                     }
                 } else {
                     mView.showError(msg);
+                    mView.loadComplete();
                 }
             }
 

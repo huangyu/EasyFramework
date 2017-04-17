@@ -29,6 +29,8 @@ public class NewsListAdapter extends CommonRecyclerAdapter<News> {
     public NewsListAdapter(Context context) {
         super(context);
         mPage = new PageBean();
+        isUseHeader = false;
+        isUseFooter = true;
     }
 
     @Override
@@ -58,11 +60,6 @@ public class NewsListAdapter extends CommonRecyclerAdapter<News> {
     @Override
     public int getFootLayoutResource() {
         return R.layout.list_item_foot;
-    }
-
-    @Override
-    public int getItemCount() {
-        return mDataList == null ? 0 : mDataList.size() + 1;
     }
 
 }

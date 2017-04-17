@@ -17,6 +17,9 @@ public abstract class CommonRecyclerAdapter<T> extends RecyclerView.Adapter<Comm
     protected static final int TYPE_HEADER = 1;
     protected static final int TYPE_FOOTER = 2;
 
+    protected boolean isUseHeader;
+    protected boolean isUseFooter;
+
     protected Context mContext;
 
     protected List<T> mDataList;
@@ -138,7 +141,15 @@ public abstract class CommonRecyclerAdapter<T> extends RecyclerView.Adapter<Comm
 
     @Override
     public int getItemCount() {
-        return mDataList == null ? 0 : mDataList.size();
+        if (mDataList == null) {
+            return 0;
+        }
+        if (isUseFooter && isUseHeader) {
+            return mDataList.size() + 2;
+        } else if (isUseHeader || isUseFooter) {
+            return mDataList.size() + 1;
+        }
+        return mDataList.size();
     }
 
     public interface OnItemClickListener {

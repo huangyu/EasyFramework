@@ -78,6 +78,9 @@ public class RefreshAndLoadView extends LinearLayout {
     public void setComplete() {
         setIsRefreshing(false);
         setIsLoading(false);
+
+
+
     }
 
     public void startRefresh() {
