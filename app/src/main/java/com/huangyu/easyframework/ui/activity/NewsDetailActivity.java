@@ -47,7 +47,7 @@ public class NewsDetailActivity extends BaseActivity {
 
             @Override
             public void onPageError(int errorCode, String description, String failingUrl) {
-
+                mSwipeRefreshLayout.setRefreshing(false);
             }
 
             @Override

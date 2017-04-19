@@ -19,6 +19,7 @@ public abstract class CommonRecyclerAdapter<T> extends RecyclerView.Adapter<Comm
 
     protected boolean isUseHeader;
     protected boolean isUseFooter;
+    public boolean isLoadError;
 
     protected Context mContext;
 

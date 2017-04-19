@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">EasyFramework</string>
+    <string name="tips_foot_view">无法加载更多，点击重新加载。</string>
 </resources>

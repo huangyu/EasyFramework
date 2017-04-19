@@ -22,6 +22,7 @@ public class RefreshAndLoadView extends LinearLayout {
 
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mRecyclerView;
+    private CommonRecyclerAdapter mAdapter;
 
     private RefreshAndLoadListener mRefreshAndLoadListener;
 
@@ -72,10 +73,16 @@ public class RefreshAndLoadView extends LinearLayout {
 
     public RefreshAndLoadView setAdapter(RecyclerView.Adapter adapter) {
         this.mRecyclerView.setAdapter(adapter);
+        this.mAdapter = (CommonRecyclerAdapter) adapter;
         return this;
     }
 
     public void setComplete() {
+        if (isLoading()) {
+            mAdapter.isLoadError = true;
+            mAdapter.notifyItemChanged(mAdapter.getItemCount() - 1);
+        }
+
         setIsRefreshing(false);
         setIsLoading(false);
     }
@@ -88,6 +95,7 @@ public class RefreshAndLoadView extends LinearLayout {
     }
 
     public void startLoad() {
+        mAdapter.isLoadError = false;
         setIsLoading(true);
         if (mRefreshAndLoadListener != null) {
             mRefreshAndLoadListener.onLoad();

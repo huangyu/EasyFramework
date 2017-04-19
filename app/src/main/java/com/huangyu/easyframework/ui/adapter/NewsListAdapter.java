@@ -1,7 +1,9 @@
 package com.huangyu.easyframework.ui.adapter;
 
 import android.content.Context;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -29,8 +31,6 @@ public class NewsListAdapter extends CommonRecyclerAdapter<News> {
     public NewsListAdapter(Context context) {
         super(context);
         mPage = new PageBean();
-        isUseHeader = false;
-        isUseFooter = true;
     }
 
     @Override
@@ -44,6 +44,22 @@ public class NewsListAdapter extends CommonRecyclerAdapter<News> {
             Glide.with(mContext).load(data.getPicUrl()).into(ivPic);
             tvTitle.setText(data.getTitle());
             tvDescription.setText(data.getDescription());
+        } else {
+            ProgressBar pbLoading = holder.getView(R.id.progress_bar);
+            TextView tvTips = holder.getView(R.id.tv_tips);
+//            tvTips.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//
+//                }
+//            });
+            if (isLoadError) {
+                pbLoading.setVisibility(View.GONE);
+                tvTips.setVisibility(View.VISIBLE);
+            } else {
+                pbLoading.setVisibility(View.VISIBLE);
+                tvTips.setVisibility(View.GONE);
+            }
         }
     }
 
