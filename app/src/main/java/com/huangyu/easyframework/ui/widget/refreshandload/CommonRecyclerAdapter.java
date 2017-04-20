@@ -19,7 +19,7 @@ public abstract class CommonRecyclerAdapter<T> extends RecyclerView.Adapter<Comm
 
     protected boolean isUseHeader;
     protected boolean isUseFooter;
-    public boolean isLoadError;
+    protected boolean isLoadError;
 
     protected Context mContext;
 
@@ -27,6 +27,10 @@ public abstract class CommonRecyclerAdapter<T> extends RecyclerView.Adapter<Comm
 
     protected OnItemClickListener mOnItemClick;
     protected OnItemLongClickListener mOnItemLongClick;
+
+    public void setLoadError(boolean isLoadError) {
+        this.isLoadError = isLoadError;
+    }
 
     public CommonRecyclerAdapter(Context context) {
         mContext = context;

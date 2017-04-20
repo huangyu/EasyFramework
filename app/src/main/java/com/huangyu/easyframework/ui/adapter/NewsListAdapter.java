@@ -18,6 +18,8 @@ import com.huangyu.easyframework.ui.widget.refreshandload.CommonRecyclerViewHold
  */
 public class NewsListAdapter extends CommonRecyclerAdapter<News> {
 
+    private IReload mIReload;
+
     private PageBean mPage;
 
     public PageBean getPage() {
@@ -31,6 +33,11 @@ public class NewsListAdapter extends CommonRecyclerAdapter<News> {
     public NewsListAdapter(Context context) {
         super(context);
         mPage = new PageBean();
+    }
+
+    public NewsListAdapter(Context context, IReload iReload) {
+        this(context);
+        this.mIReload = iReload;
     }
 
     @Override
@@ -47,12 +54,14 @@ public class NewsListAdapter extends CommonRecyclerAdapter<News> {
         } else {
             ProgressBar pbLoading = holder.getView(R.id.progress_bar);
             TextView tvTips = holder.getView(R.id.tv_tips);
-//            tvTips.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//
-//                }
-//            });
+            tvTips.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mIReload != null) {
+                        mIReload.reload();
+                    }
+                }
+            });
             if (isLoadError) {
                 pbLoading.setVisibility(View.GONE);
                 tvTips.setVisibility(View.VISIBLE);
@@ -76,6 +85,10 @@ public class NewsListAdapter extends CommonRecyclerAdapter<News> {
     @Override
     public int getFootLayoutResource() {
         return R.layout.list_item_foot;
+    }
+
+    public interface IReload {
+        void reload();
     }
 
 }

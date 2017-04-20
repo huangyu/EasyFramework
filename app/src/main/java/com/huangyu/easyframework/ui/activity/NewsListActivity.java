@@ -15,6 +15,7 @@ import com.huangyu.easyframework.ui.widget.refreshandload.CommonRecyclerAdapter;
 import com.huangyu.easyframework.ui.widget.refreshandload.RefreshAndLoadListener;
 import com.huangyu.easyframework.ui.widget.refreshandload.RefreshAndLoadView;
 import com.huangyu.library.ui.BaseActivity;
+import com.huangyu.library.util.NetworkUtils;
 
 import java.util.List;
 
@@ -39,7 +40,12 @@ public class NewsListActivity extends BaseActivity<INewsListContract.INewsListVi
 
     @Override
     protected void initView(Bundle savedInstanceState) {
-        mAdapter = new NewsListAdapter(this);
+        mAdapter = new NewsListAdapter(this, new NewsListAdapter.IReload() {
+            @Override
+            public void reload() {
+                load();
+            }
+        });
         mAdapter.setOnItemClick(new CommonRecyclerAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
@@ -86,7 +92,14 @@ public class NewsListActivity extends BaseActivity<INewsListContract.INewsListVi
 
     @Override
     public void showError(String msg) {
+        setLoadError();
         Toast.makeText(NewsListActivity.this, msg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void setLoadError() {
+        mAdapter.setLoadError(true);
+        mAdapter.notifyItemChanged(mAdapter.getItemCount() - 1);
     }
 
     private void refresh() {
@@ -95,6 +108,11 @@ public class NewsListActivity extends BaseActivity<INewsListContract.INewsListVi
     }
 
     private void load() {
+        if (!NetworkUtils.isConnected()) {
+            showError("网络出错，请检查手机网络");
+            return;
+        }
+
         int page = mAdapter.getPage().getPage();
         mAdapter.getPage().setPage(++page);
         mPresenter.getWeChetNews(mAdapter.getPage().getPage(), mAdapter.getPage().getNum());

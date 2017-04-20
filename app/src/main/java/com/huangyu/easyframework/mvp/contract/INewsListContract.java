@@ -20,6 +20,7 @@ public interface INewsListContract {
         void addData(List<News> data);
         void loadComplete();
         void showError(String msg);
+        void setLoadError();
     }
 
     interface INewsListModel extends IBaseModel {

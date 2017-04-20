@@ -78,16 +78,13 @@ public class RefreshAndLoadView extends LinearLayout {
     }
 
     public void setComplete() {
-        if (isLoading()) {
-            mAdapter.isLoadError = true;
-            mAdapter.notifyItemChanged(mAdapter.getItemCount() - 1);
-        }
-
         setIsRefreshing(false);
         setIsLoading(false);
     }
 
     public void startRefresh() {
+        resetLoadView();
+        mAdapter.setLoadError(false);
         setIsRefreshing(true);
         if (mRefreshAndLoadListener != null) {
             mRefreshAndLoadListener.onRefresh();
@@ -95,11 +92,16 @@ public class RefreshAndLoadView extends LinearLayout {
     }
 
     public void startLoad() {
-        mAdapter.isLoadError = false;
+        resetLoadView();
         setIsLoading(true);
         if (mRefreshAndLoadListener != null) {
             mRefreshAndLoadListener.onLoad();
         }
+    }
+
+    private void resetLoadView() {
+        mAdapter.setLoadError(false);
+        mAdapter.notifyItemChanged(mAdapter.getItemCount() - 1);
     }
 
     private void init(Context context) {

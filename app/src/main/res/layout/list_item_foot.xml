@@ -17,7 +17,8 @@
     <TextView
         android:id="@+id/tv_tips"
         android:layout_width="match_parent"
-        android:layout_height="?android:progressBarStyle"
+        android:layout_height="50dp"
         android:gravity="center"
         android:text="@string/tips_foot_view" />
+
 </LinearLayout>
