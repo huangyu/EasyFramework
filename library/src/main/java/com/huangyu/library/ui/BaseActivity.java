@@ -47,6 +47,7 @@ public abstract class BaseActivity<V extends IBaseView, P extends BasePresenter<
             mPresenter.destroy();
         }
         RxManager.getInstance().clear();
+        ButterKnife.unbind(this);
         ActivityManager.getInstance().removeActivity(this);
         super.onDestroy();
     }
