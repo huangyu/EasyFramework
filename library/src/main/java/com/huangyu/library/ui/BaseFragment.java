@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import com.huangyu.library.mvp.BasePresenter;
 import com.huangyu.library.mvp.IBaseView;
+import com.huangyu.library.rx.RxManager;
 
 import static com.huangyu.library.util.GenericUtils.getT;
 
@@ -43,6 +44,15 @@ public abstract class BaseFragment<V extends IBaseView, P extends BasePresenter<
         }
         initView(savedInstanceState);
         return mRootView;
+    }
+
+    @Override
+    public void onDestroy() {
+        if (mPresenter != null) {
+            mPresenter.destroy();
+        }
+        RxManager.getInstance().clear();
+        super.onDestroy();
     }
 
     /**
