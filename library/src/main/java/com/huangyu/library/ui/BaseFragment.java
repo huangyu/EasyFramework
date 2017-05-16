@@ -23,6 +23,7 @@ public abstract class BaseFragment<V extends IBaseView, P extends BasePresenter<
 
     private View mRootView;
     protected P mPresenter;
+    protected RxManager mRxManager = new RxManager();
 
     @Nullable
     @Override
@@ -63,7 +64,7 @@ public abstract class BaseFragment<V extends IBaseView, P extends BasePresenter<
         if (mPresenter != null) {
             mPresenter.destroy();
         }
-        RxManager.getInstance().clear();
+        mRxManager.clear();
         super.onDestroy();
     }
 
