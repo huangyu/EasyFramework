@@ -32,11 +32,6 @@ public abstract class BaseFragment<V extends IBaseView, P extends BasePresenter<
         }
         ButterKnife.bind(this, mRootView);
 
-        ViewGroup parent = (ViewGroup) mRootView.getParent();
-        if (parent != null) {
-            parent.removeView(mRootView);
-        }
-
         mPresenter = getT(this, 1);
         if (mPresenter != null) {
             mPresenter.mContext = getContext();
