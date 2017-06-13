@@ -5,10 +5,9 @@ import android.content.pm.ApplicationInfo;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 
-import com.huangyu.library.BuildConfig;
 import com.huangyu.library.util.LogUtils;
-import com.squareup.leakcanary.LeakCanary;
-import com.squareup.leakcanary.RefWatcher;
+
+import io.realm.Realm;
 
 /**
  * 应用基类
@@ -16,28 +15,20 @@ import com.squareup.leakcanary.RefWatcher;
  */
 public class BaseApplication extends MultiDexApplication {
 
-    private static BaseApplication INSTANCE;
-    private RefWatcher mRefWatcher;
+    private static BaseApplication mAppContext;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        INSTANCE = this;
+        mAppContext = this;
 
         CrashHandler.getInstance().init(this);
         LogUtils.init(isApkInDebug(this));
-        if (LeakCanary.isInAnalyzerProcess(this)) {
-            return;
-        }
-        mRefWatcher = BuildConfig.DEBUG ? LeakCanary.install(this) : RefWatcher.DISABLED;
+        Realm.init(this);
     }
 
-    public static BaseApplication getInstance() {
-        return INSTANCE;
-    }
-
-    public static RefWatcher getRefWatcher() {
-        return getInstance().mRefWatcher;
+    public static Context getAppContext() {
+        return mAppContext;
     }
 
     @Override
