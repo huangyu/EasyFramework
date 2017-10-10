@@ -4,9 +4,7 @@ import com.huangyu.easyframework.bean.NewsResponse;
 import com.huangyu.easyframework.mvp.contract.INewsListContract;
 import com.huangyu.easyframework.mvp.model.NewsListModel;
 
-import rx.Observable;
 import rx.Subscriber;
-import rx.Subscription;
 
 /**
  * Created by huangyu on 2017-4-11.
@@ -22,13 +20,7 @@ public class NewsListPresenter extends INewsListContract.ANewsListPresenter {
 
     @Override
     public void getWeChetNews(final int page, int num) {
-        Observable<NewsResponse> observable = mMainModel.getWeChatNews(page, num);
-        Subscription subscription = observable.subscribe(new Subscriber<NewsResponse>() {
-            @Override
-            public void onCompleted() {
-                mView.loadComplete();
-            }
-
+        mRxManager.add(mMainModel.getWeChatNews(page, num, new Subscriber<NewsResponse>() {
             @Override
             public void onError(Throwable e) {
                 mView.showError(e.getMessage());
@@ -52,11 +44,10 @@ public class NewsListPresenter extends INewsListContract.ANewsListPresenter {
             }
 
             @Override
-            public void onStart() {
-                super.onStart();
+            public void onCompleted() {
+                mView.loadComplete();
             }
-        });
-        mRxManager.add(subscription);
+        }));
     }
 
 }

@@ -8,7 +8,8 @@ import com.huangyu.library.mvp.IBaseView;
 
 import java.util.List;
 
-import rx.Observable;
+import rx.Subscriber;
+import rx.Subscription;
 
 /**
  * Created by huangyu on 2017-4-11.
@@ -24,7 +25,7 @@ public interface INewsListContract {
     }
 
     interface INewsListModel extends IBaseModel {
-        Observable<NewsResponse> getWeChatNews(int page, int num);
+        Subscription getWeChatNews(int page, int num, Subscriber<NewsResponse> subscriber);
     }
 
     abstract class ANewsListPresenter extends BasePresenter<INewsListView> {
