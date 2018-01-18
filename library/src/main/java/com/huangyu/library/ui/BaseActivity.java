@@ -7,12 +7,12 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import com.huangyu.library.app.ActivityManager;
-import com.huangyu.library.app.BaseApplication;
 import com.huangyu.library.mvp.BasePresenter;
 import com.huangyu.library.mvp.IBaseView;
 import com.huangyu.library.rx.RxManager;
 
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 import static com.huangyu.library.util.GenericUtils.getT;
 
@@ -24,13 +24,14 @@ public abstract class BaseActivity<V extends IBaseView, P extends BasePresenter<
 
     protected P mPresenter;
     protected RxManager mRxManager = new RxManager();
+    protected Unbinder mUnBinder;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
         ActivityManager.getInstance().addActivity(this);
-        ButterKnife.bind(this);
+        mUnBinder = ButterKnife.bind(this);
 
         mPresenter = getT(this, 1);
         if (mPresenter != null) {
@@ -48,12 +49,11 @@ public abstract class BaseActivity<V extends IBaseView, P extends BasePresenter<
         if (mPresenter != null) {
             mPresenter.destroy();
         }
-        if(mRxManager!= null) {
+        if (mRxManager != null) {
             mRxManager.clear();
         }
-        ButterKnife.unbind(this);
+        mUnBinder.unbind();
         ActivityManager.getInstance().removeActivity(this);
-        BaseApplication.getRefWatcher().watch(this);
         super.onDestroy();
     }
 

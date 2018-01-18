@@ -2,8 +2,8 @@ package com.huangyu.library.http;
 
 import android.text.TextUtils;
 
-import com.huangyu.library.util.LogUtils;
-import com.huangyu.library.util.NetworkUtils;
+import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.NetworkUtils;
 
 import java.io.IOException;
 
@@ -33,7 +33,7 @@ public class RewriteCacheControlInterceptor implements Interceptor {
                     .build();
         }
         Response originalResponse = chain.proceed(request);
-        LogUtils.logd("api返回数据", originalResponse.body().toString());
+        LogUtils.d("api返回数据", originalResponse.body().toString());
         if (NetworkUtils.isConnected()) {
             //有网的时候读接口上的@Headers里的配置，你可以在这里进行统一的设置
             return originalResponse.newBuilder()

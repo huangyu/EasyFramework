@@ -2,7 +2,7 @@ package com.huangyu.library.app;
 
 import android.content.Context;
 
-import com.huangyu.library.util.LogToFileUtils;
+import com.blankj.utilcode.util.LogUtils;
 
 /**
  * Created by huangyu on 2017-4-10.
@@ -74,10 +74,8 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
 //                Looper.loop();
 //            }
 //        }.start();
-        // 收集设备参数信息
-        LogToFileUtils.collectDeviceInfo(mContext);
-        // 保存日志文件
-        LogToFileUtils.saveCrashInfoToFile(ex);
+
+        LogUtils.file(ex);
         return true;
     }
 

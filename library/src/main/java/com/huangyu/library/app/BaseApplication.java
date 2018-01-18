@@ -5,7 +5,8 @@ import android.content.pm.ApplicationInfo;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 
-import com.huangyu.library.util.LogUtils;
+import com.blankj.utilcode.util.Utils;
+import com.squareup.leakcanary.LeakCanary;
 
 import io.realm.Realm;
 
@@ -22,8 +23,21 @@ public class BaseApplication extends MultiDexApplication {
         super.onCreate();
         mAppContext = this;
 
+        initLibraries();
+    }
+
+    private void initLibraries() {
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            return;
+        }
+        LeakCanary.install(this);
+
         CrashHandler.getInstance().init(this);
-        LogUtils.init(isApkInDebug(this));
+
+        Utils.init(this);
+
         Realm.init(this);
     }
 

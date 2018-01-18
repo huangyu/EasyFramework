@@ -8,12 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.huangyu.library.app.BaseApplication;
 import com.huangyu.library.mvp.BasePresenter;
 import com.huangyu.library.mvp.IBaseView;
 import com.huangyu.library.rx.RxManager;
 
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 import static com.huangyu.library.util.GenericUtils.getT;
 
@@ -25,6 +25,7 @@ public abstract class BaseFragment<V extends IBaseView, P extends BasePresenter<
     private View mRootView;
     protected P mPresenter;
     protected RxManager mRxManager = new RxManager();
+    protected Unbinder mUnBinder;
 
     @Nullable
     @Override
@@ -32,7 +33,7 @@ public abstract class BaseFragment<V extends IBaseView, P extends BasePresenter<
         if (mRootView == null) {
             mRootView = inflater.inflate(getLayoutId(), container, false);
         }
-        ButterKnife.bind(this, mRootView);
+        mUnBinder = ButterKnife.bind(this, mRootView);
 
         mPresenter = getT(this, 1);
         if (mPresenter != null) {
@@ -57,7 +58,7 @@ public abstract class BaseFragment<V extends IBaseView, P extends BasePresenter<
         if (mRootView != null) {
             ((ViewGroup) mRootView.getParent()).removeView(mRootView);
         }
-        ButterKnife.unbind(this);
+        mUnBinder.unbind();
     }
 
     @Override
@@ -66,7 +67,6 @@ public abstract class BaseFragment<V extends IBaseView, P extends BasePresenter<
             mPresenter.destroy();
         }
         mRxManager.clear();
-        BaseApplication.getRefWatcher().watch(this);
         super.onDestroy();
     }
 

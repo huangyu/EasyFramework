@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.widget.Toast;
 
+import com.blankj.utilcode.util.NetworkUtils;
 import com.huangyu.easyframework.R;
 import com.huangyu.easyframework.bean.News;
 import com.huangyu.easyframework.mvp.contract.INewsListContract;
@@ -15,15 +16,14 @@ import com.huangyu.easyframework.ui.widget.refreshandload.CommonRecyclerAdapter;
 import com.huangyu.easyframework.ui.widget.refreshandload.RefreshAndLoadListener;
 import com.huangyu.easyframework.ui.widget.refreshandload.RefreshAndLoadView;
 import com.huangyu.library.ui.BaseActivity;
-import com.huangyu.library.util.NetworkUtils;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 public class NewsListActivity extends BaseActivity<INewsListContract.INewsListView, NewsListPresenter> implements INewsListContract.INewsListView {
 
-    @Bind(R.id.refresh_and_load_view)
+    @BindView(R.id.refresh_and_load_view)
     RefreshAndLoadView mRefreshAndLoadView;
 
     private NewsListAdapter mAdapter;
@@ -56,7 +56,7 @@ public class NewsListActivity extends BaseActivity<INewsListContract.INewsListVi
                 startActivity(intent);
             }
         });
-        mRefreshAndLoadView.setLayoutManager(new LinearLayoutManager(NewsListActivity.this)).setAdapter(mAdapter).setRefreshAndLoadListener(new RefreshAndLoadListener() {
+        mRefreshAndLoadView.setLayoutManager(new LinearLayoutManager(this)).setAdapter(mAdapter).setRefreshAndLoadListener(new RefreshAndLoadListener() {
             @Override
             public void onRefresh() {
                 refresh();
@@ -109,7 +109,7 @@ public class NewsListActivity extends BaseActivity<INewsListContract.INewsListVi
 
     private void load() {
         if (!NetworkUtils.isConnected()) {
-            showError("网络出错，请检查手机网络");
+            showError(getString(R.string.tips_network_error));
             return;
         }
 

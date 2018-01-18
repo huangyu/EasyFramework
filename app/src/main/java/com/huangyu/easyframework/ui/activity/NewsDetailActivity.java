@@ -9,14 +9,14 @@ import com.huangyu.easyframework.ui.widget.webview.AdvancedWebView;
 import com.huangyu.library.mvp.IBaseView;
 import com.huangyu.library.ui.BaseActivity;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 public class NewsDetailActivity extends BaseActivity {
 
-    @Bind(R.id.swipe_refresh_layout)
+    @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
 
-    @Bind(R.id.advanced_webview)
+    @BindView(R.id.advanced_webview)
     AdvancedWebView mAdvancedWebView;
 
     @Override
