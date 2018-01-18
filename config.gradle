@@ -1,0 +1,15 @@
+ext {
+    projectName = 'EasyFramework'
+    compileSdkVersion = 27
+    buildToolsVersion = '27.0.2'
+
+    minSdkVersion = 15
+    targetSdkVersion = 27
+
+    versionCode = 100
+    versionName = '1.0.0'
+    jksPath = '../hy.jks'
+    keyAlias = 'hy'
+    keyPassword = 'hy123456'
+    storePassword = 'hy123456'
+}

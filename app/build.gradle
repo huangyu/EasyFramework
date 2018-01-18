@@ -1,15 +1,28 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.jakewharton.butterknife'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
     defaultConfig {
         applicationId "com.huangyu.easyframework"
-        minSdkVersion 14
-        targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    signingConfigs {
+        debug {}
+
+        release {
+            storeFile file(rootProject.ext.jksPath)
+            storePassword rootProject.ext.storePassword
+            keyAlias rootProject.ext.keyAlias
+            keyPassword rootProject.ext.keyPassword
+        }
     }
 
     buildTypes {
@@ -26,6 +39,36 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    applicationVariants.all { variant ->
+        if (variant.buildType.name == 'release') {
+            variant.outputs.all {
+                def name = rootProject.ext.projectName
+                def channel = ''
+                def releaseTime = new Date().format("yyyyMMddHHmmss", TimeZone.getTimeZone("GMT+8"))
+                outputFileName = "${name}_v${defaultConfig.versionName}.${defaultConfig.versionCode}.${releaseTime}_release.pro_${channel}.apk"
+            }
+        }
+        if (variant.buildType.name == 'debug') {
+            variant.outputs.all {
+                def name = rootProject.ext.projectName
+                def channel = ''
+                def releaseTime = new Date().format("yyyyMMddHHmmss", TimeZone.getTimeZone("GMT+8"))
+                outputFileName = "${name}_v${defaultConfig.versionName}.${defaultConfig.versionCode}.${releaseTime}_debug_${channel}.apk"
+            }
+        }
+    }
+}
+
+configurations.all {
+    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+        def requested = details.requested
+        if (requested.group == 'com.android.support') {
+            if (!requested.name.startsWith("multidex")) {
+                details.useVersion '27.0.2'
+            }
+        }
+    }
 }
 
 dependencies {
@@ -37,9 +80,8 @@ dependencies {
 
     compile project(':library')
 
-    compile "com.android.support:support-v4:25.3.1"
-    compile 'com.android.support:appcompat-v7:25.3.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 
-    compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'com.github.bumptech.glide:glide:4.2.0'
     compile 'com.github.chrisbanes:PhotoView:2.0.0'
 }
