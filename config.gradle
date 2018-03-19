@@ -11,7 +11,7 @@ ext {
     keyPassword = 'hy123456'
     storePassword = 'hy123456'
 
-testrunner = '1.0.1'
+    testrunner = '1.0.1'
     junit = '4.12'
     espresso = '3.0.1'
     multidex = '1.0.3'
