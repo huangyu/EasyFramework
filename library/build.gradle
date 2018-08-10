@@ -2,50 +2,44 @@ apply plugin: 'com.android.library'
 apply plugin: 'realm-android'
 
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
+    compileSdkVersion rootProject.ext.compileSdkVersion
 
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile "junit:junit:$rootProject.ext.junit"
-    androidTestImplementation "com.android.support.test:runner:$rootProject.ext.testrunner"
-    androidTestImplementation "com.android.support.test.espresso:espresso-core:$rootProject.ext.espresso"
+    api fileTree(dir: 'libs', include: ['*.jar'])
+//    api "com.android.support:appcompat-v7:$rootProject.ext.appcompat_v7"
+//    api "com.android.support:support:$rootProject.ext.appcompat_v7"
 
-    compile "com.android.support:multidex:$rootProject.ext.multidex"
+    api "com.android.support:multidex:$rootProject.ext.multidex"
 
-    compile "com.jakewharton:butterknife:$rootProject.ext.butterknife"
+    api "com.jakewharton:butterknife:$rootProject.ext.butterknife"
 
-    compile "com.orhanobut:logger:$rootProject.ext.logger"
+    api "com.orhanobut:logger:$rootProject.ext.logger"
 
-    compile "com.squareup.okhttp3:okhttp:$rootProject.ext.okhttp"
-    compile "com.squareup.okhttp3:logging-interceptor:$rootProject.ext.logging_interceptor"
+    api "com.squareup.okhttp3:okhttp:$rootProject.ext.okhttp"
+    api "com.squareup.okhttp3:logging-interceptor:$rootProject.ext.logging_interceptor"
 
-    compile "com.squareup.retrofit2:retrofit:$rootProject.ext.retrofit"
-    compile "com.squareup.retrofit2:adapter-rxjava:$rootProject.ext.adapter_rxjava"
-    compile "com.squareup.retrofit2:converter-gson:$rootProject.ext.converter_gson"
+    api "com.squareup.retrofit2:retrofit:$rootProject.ext.retrofit"
+    api "com.squareup.retrofit2:adapter-rxjava:$rootProject.ext.adapter_rxjava"
+    api "com.squareup.retrofit2:converter-gson:$rootProject.ext.converter_gson"
 
-    compile "io.reactivex:rxandroid:$rootProject.ext.rxandroid"
-    compile "io.reactivex:rxjava:$rootProject.ext.rxjava"
+    api "io.reactivex:rxandroid:$rootProject.ext.rxandroid"
+    api "io.reactivex:rxjava:$rootProject.ext.rxjava"
 
-    compile "com.jakewharton.rxbinding:rxbinding:$rootProject.ext.rxbinding"
-    compile "com.jakewharton.rxbinding:rxbinding-appcompat-v7:$rootProject.ext.rxbinding_appcompat_v7"
-    compile "com.jakewharton.rxbinding:rxbinding-design:$rootProject.ext.rxbinding_design"
-
-    compile("com.blankj:utilcode:$rootProject.ext.utilcode") {
+    api("com.blankj:utilcode:$rootProject.ext.utilcode") {
         exclude group: "com.android.support"
     }
 
-    debugCompile "com.squareup.leakcanary:leakcanary-android:$rootProject.ext.leakcanary"
-    releaseCompile "com.squareup.leakcanary:leakcanary-android-no-op:$rootProject.ext.leakcanary"
-    testCompile "com.squareup.leakcanary:leakcanary-android-no-op:$rootProject.ext.leakcanary"
+    debugImplementation "com.squareup.leakcanary:leakcanary-android:$rootProject.ext.leakcanary"
+    releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$rootProject.ext.leakcanary"
+    testImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$rootProject.ext.leakcanary"
 }
